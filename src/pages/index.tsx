@@ -1,5 +1,5 @@
 import AdminDashboardPage from "./admin/dashboard";
-import ImageUploadPage from "./image-upload";
+import ImageUploadPage from "./upload";
 import LeaderboardPage from "./leaderboard";
 import LoginPage from "./login";
 import RegisterPage from "./register";
