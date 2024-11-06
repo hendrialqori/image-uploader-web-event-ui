@@ -1,2 +1,54 @@
 import type { Success, Error } from "#/@types";
-import useInstance from "#/hooks/use-instance";
+import axios, { AxiosError } from "axios";
+import { API } from "#/constant";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useAxios from "#/hooks/use-axios";
+import type { User } from "#/@types";
+
+export function useLogin() {
+    type Body = {
+        username: string;
+        password: string
+    }
+    const POST = async (body: Body) => {
+        const req = await axios.post(`${API}/auth/login`, body)
+        return req.data
+    }
+
+    return useMutation<Success<string>, AxiosError<Error>, Body>({
+        mutationFn: POST
+    })
+}
+
+export function useRegister() {
+    type Body = {
+        username: string;
+        password: string
+    }
+    const POST = async (body: Body) => {
+        const req = await axios.post(`${API}/auth/register`, body)
+        return req.data
+    }
+
+    return useMutation<Success<string>, AxiosError<Error>, Body>({
+        mutationFn: POST
+    })
+}
+
+export function useCredential() {
+    const axiosInstance = useAxios()
+    const instance = axiosInstance()
+
+    const GET = async ({ signal }: { signal: AbortSignal }) => {
+        const req = await instance.get(`/auth/credential`, { signal, withCredentials: true })
+        return req.data
+    }
+
+    return useQuery<Success<User>, AxiosError<Error>>({
+        queryKey: ["CREDENTIAL"],
+        queryFn: ({ signal }) => GET({ signal }),
+        staleTime: 1 * (60 * 1000) // 1 minute,
+    })
+
+
+}
