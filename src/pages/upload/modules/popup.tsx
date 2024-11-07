@@ -47,8 +47,8 @@ export default function Popup({ children }: Props) {
             <div className="relative" aria-label="popup" role="dialog">
                 {children({ toggle: togglePopup })}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ y: showPopup ? "0.5rem" : "1rem", opacity: showPopup ? 1 : 0 }}
+                    initial={{ opacity: 0, display: "none" }}
+                    animate={{ y: showPopup ? "0.5rem" : "1rem", opacity: showPopup ? 1 : 0, display: showPopup ? "block" : "none" }}
                     transition={{ bounce: false, duration: .1, delay: 0.08 }}
                     className="bg-slate-50 rounded-lg shadow-md p-1 w-36 absolute -left-28" aria-label="popup-body">
                     <button
