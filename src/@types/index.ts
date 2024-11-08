@@ -18,3 +18,12 @@ export type User = {
     created_at: Date | string
     updated_at: Date | string
 }
+
+export type FileHistory = {
+    file: string, // base64
+    type: string
+    metadata: {
+        name: string,
+        size: number
+    }
+}
