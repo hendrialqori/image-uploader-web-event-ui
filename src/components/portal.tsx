@@ -8,11 +8,11 @@ function Content({ children }: { children: React.ReactNode }) {
 
     return ReactDOM.createPortal(
         <motion.section
-            className="fixed inset-0 center-flex z-50"
+            className="fixed inset-0 flex-center z-50"
             initial={{ opacity: 0, top: -30 }}
             animate={{ opacity: 1, top: 0 }}
             exit={{ opacity: 0, top: -30 }}
-            transition={{ duration: 0.1 }}
+            transition={{ duration: 0.2 }}
         >
             <div
                 className="z-[2] max-h-screen overflow-y-auto w-full flex justify-center py-5 px-2 lg:px-0"
