@@ -28,10 +28,16 @@ export default function LoginPage() {
 
         login.mutate({ username, password }, {
             onSuccess: (result) => {
-                const token = result.data
+                const token = result.data.token;
+                const role = result.data.role
                 localStorage.setItem(TOKEN, token)
 
-                navigate("/upload")
+                if (role === "MEMBER") {
+                    navigate("/upload")
+                } else {
+                    navigate("/admin/dashboard")
+                }
+
             },
             onError: (error) => {
                 const errorType = mockErrorResponse[error.response?.data.type as keyof typeof mockErrorResponse]
