@@ -1,9 +1,7 @@
 import React from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { motion } from "framer-motion";
-import { TOKEN } from "#/constant";
-import { useNavigate } from "react-router-dom";
-import ModalLogout from "./modal-logout";
+import ModalLogout from "#/components/modal-logout";
 
 type ChildrenProps = {
     toggle: () => void
@@ -15,7 +13,7 @@ type Props = {
 
 export default function Popup({ children }: Props) {
     const [showPopup, setPopup] = React.useState(false)
-    const [isModalLogout, setModalLogout] = React.useState(false)
+    const [isLogout, setLogout] = React.useState(false)
 
     function togglePopup() {
         setPopup((prev) => !prev)
@@ -25,9 +23,9 @@ export default function Popup({ children }: Props) {
         return () => {
             if (type === "hide") {
                 setPopup(false)
-                setModalLogout(false)
+                setLogout(false)
             } else {
-                setModalLogout(true)
+                setLogout(true)
             }
         }
     }
@@ -51,7 +49,7 @@ export default function Popup({ children }: Props) {
                     </button>
                 </motion.div>
             </div>
-            <ModalLogout isOpen={isModalLogout} onClose={modalLogout("hide")} />
+            <ModalLogout isOpen={isLogout} onClose={modalLogout("hide")} />
         </React.Fragment>
     )
 }
