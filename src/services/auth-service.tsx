@@ -15,9 +15,10 @@ export function useLogin() {
         return req.data
     }
 
-    return useMutation<Success<string>, AxiosError<Error>, Body>({
-        mutationFn: POST
-    })
+    return useMutation<Success<Record<"username" | "role" | "token", string>>
+        , AxiosError<Error>, Body>({
+            mutationFn: POST
+        })
 }
 
 export function useRegister() {
@@ -49,6 +50,4 @@ export function useCredential() {
         queryFn: ({ signal }) => GET({ signal }),
         staleTime: 1 * (60 * 1000) // 1 minute,
     })
-
-
 }

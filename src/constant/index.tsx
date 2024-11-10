@@ -21,3 +21,10 @@ export const NON_PERTAMAX_PERSONAL_VEHICLE = "Non Pertamax Personal Vehicle";
 export const ELECTRIC_VEHICLE = "Electric Vehicle";
 export const LITTER_FILTER = "Litter Filter";
 export const SINGLE_WASTE_BIN = "Single Waste Bin";
+
+// params key
+export const PAGE = "page";
+export const SORT_TYPE = "sort_type";
+export const SORT_KEY = "sort_key";
+export const USER_SEARCH = "user_search";
+export const USER_SELECT = "user_select";

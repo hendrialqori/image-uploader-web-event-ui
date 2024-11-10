@@ -2,7 +2,7 @@ import axios from "axios";
 import { API, TOKEN } from "#/constant";
 import { useNavigate } from "react-router-dom";
 
-const useAxios = () => {
+export default function useAxios() {
     const redirect = useNavigate()
 
     const request = () => {
@@ -33,5 +33,3 @@ const useAxios = () => {
 
     return request
 }
-
-export default useAxios
