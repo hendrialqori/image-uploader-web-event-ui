@@ -21,12 +21,12 @@ export default function ModalLogout({ isOpen, onClose }: Props) {
         <Portal isOpen={isOpen}>
             <div className="relative bg-white rounded-lg w-[320px] h-max py-7 space-y-8">
                 <div className="flex-center flex-col gap-3">
-                    <GoAlertFill className="text-red-500 text-4xl" />
-                    <p className="text-sm font-medium">Are you sure leave this page ?</p>
+                    <GoAlertFill className="text-red-500 text-2xl md:text-4xl" />
+                    <p className="text-xs md:text-sm font-medium">Are you sure leave this page ?</p>
                 </div>
                 <div className="flex-center gap-4">
-                    <button onClick={onClose} className="text-sm font-medium bg-gray-200 hover:outline hover:outline-black text-black rounded-md py-1.5 px-6">Cancel</button>
-                    <button onClick={logoutAction} className="text-sm font-medium bg-red-500 hover:outline hover:outline-red-600 text-white rounded-md py-1.5 px-6">Logout</button>
+                    <button onClick={onClose} className="text-xs md:text-sm font-medium bg-gray-200 hover:outline hover:outline-black text-black rounded-md py-1.5 px-6">Cancel</button>
+                    <button onClick={logoutAction} className="text-xs md:text-sm font-medium bg-red-500 hover:outline hover:outline-red-600 text-white rounded-md py-1.5 px-6">Logout</button>
                 </div>
             </div>
         </Portal>

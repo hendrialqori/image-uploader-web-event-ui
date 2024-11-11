@@ -24,12 +24,12 @@ function appRoutes() {
                         <Route index element={<Page.ImageUploadPage />} />
                     </Route>
 
-                    <Route path="admin" element={<ProtectRoute />}>
-                        <Route path="dashboard" element={<Page.AdminDashboardPage />} />
-                    </Route>
-
-                    <Route path="leaderboard">
-                        <Route index element={<Page.LeaderboardPage />} />
+                    <Route path="admin">
+                        <Route path="login" element={<Page.AdminLoginPage />} />
+                        <Route element={<ProtectRoute />}>
+                            <Route path="dashboard" element={<Page.AdminDashboardPage />} />
+                            <Route path="leaderboard" element={<Page.AdminLeaderboardPage />} />
+                        </Route>
                     </Route>
 
                 </Route>

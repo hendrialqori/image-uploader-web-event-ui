@@ -1,20 +1,40 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { toast } from "sonner"
 
 import { RegisterSchemeType, registerScheme } from "./scheme"
 import { cn, mockErrorResponse } from "#/utils"
-import { useRegister } from "#/services/auth-service"
+import { useLogin, useRegister } from "#/services/auth-service"
 import { ButtonSpinnerLoading } from "#/components/ui/lazy"
+import { TOKEN } from "#/constant"
 
 export default function Register() {
     const navigate = useNavigate()
-    const login = useRegister()
+    const registration = useRegister()
+    const login = useLogin()
 
     const { register, handleSubmit, formState: { errors }, setError } = useForm<RegisterSchemeType>({
         resolver: zodResolver(registerScheme)
     })
+
+    function loginAction({ username, password }: Omit<RegisterSchemeType, "confirmPassword">) {
+        login.mutate({ username, password }, {
+            onSuccess: (result) => {
+                const token = result.data.token;
+                localStorage.setItem(TOKEN, token)
+
+                navigate("/upload")
+            },
+            onError: (error) => {
+                const errorType = mockErrorResponse[error.response?.data.type as keyof typeof mockErrorResponse]
+                const errorMessage = error.response?.data.message ?? "Something went wrong!"
+                toast.error(errorType, {
+                    description: errorMessage
+                })
+            }
+        })
+    }
 
     const submit = handleSubmit(({ username, password, confirmPassword }) => {
 
@@ -25,9 +45,9 @@ export default function Register() {
             return
         }
 
-        login.mutate({ username, password }, {
+        registration.mutate({ username, password }, {
             onSuccess: () => {
-                navigate("/auth/register")
+                loginAction({ username, password })
             },
             onError: (error) => {
                 const errorType = mockErrorResponse[error.response?.data.type as keyof typeof mockErrorResponse]
@@ -42,12 +62,16 @@ export default function Register() {
     const validInput = " outline-black-500 active:outline-black-500 "
     const inValidInput = "outline-red-500 active:outline-red-500 bg-red-50 with-shake-invalid"
 
+    const isPending = registration.isPending || login.isPending;
+
     return (
         <main>
             <header className="p-5">
-                <h1 className="text-sm text-center md:text-left font-semibold">[Company_name/Logo]</h1>
+                <div>
+                    <img src="/pertamina-logo.png" className="size-8" alt="logo" width={30} height={30} />
+                </div>
             </header>
-            <section className="min-h-[calc(100dvh_-_60px)] w-[calc(100%_-_50px)] max-w-[400px] mx-auto flex-center flex-col space-y-5 md:space-y-7">
+            <section className="min-h-[calc(100dvh_-_80px)] w-[calc(100%_-_50px)] max-w-[400px] mx-auto flex-center flex-col space-y-5 md:space-y-7">
                 <div className="text-center  !-tracking-wide">
                     <h2 className="text-xl md:text-3xl font-semibold">Register to Event</h2>
                     <p className="text-xs md:text-base text-slate-500">Please enter your details below</p>
@@ -89,18 +113,26 @@ export default function Register() {
                         </div>
                         <button
                             type="submit"
-                            className="text-xs md:text-base font-medium text-white text-center bg-black hover:bg-black/70 disabled:bg-black/70 w-full p-3 rounded-[.63rem] flex-center"
-                            disabled={login.isPending}
+                            className="relative overflow-hidden text-xs md:text-base font-medium text-white text-center bg-black hover:bg-black/70 disabled:bg-black/70 w-full p-3 rounded-[.63rem] flex-center"
+                            disabled={isPending}
                         >
-                            {login.isPending ?
+                            <span className="!-tracking-wide select-none">Register</span>
+                            {isPending &&
                                 <ButtonSpinnerLoading />
-                                : <span className="!-tracking-wide select-none">Register</span>}
+                            }
                         </button>
                     </form>
                 </section>
                 <footer>
                     <p className="text-xs md:text-sm text-slate-500 select-none">
-                        Have an account, <Link to="/auth/login" className="text-black font-semibold hover:underline">login here!</Link>
+                        Have an account,
+                        <button
+                            className="text-black font-semibold hover:underline"
+                            disabled={isPending}
+                            aria-disabled={isPending}
+                        >
+                            login here!
+                        </button>
                     </p>
                 </footer>
             </section>

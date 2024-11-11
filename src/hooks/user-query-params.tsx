@@ -1,7 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import * as CONST from "#/constant"
 
-const queryKeys = [CONST.SORT_KEY, CONST.SORT_TYPE, CONST.USER_SEARCH, CONST.USER_SELECT, CONST.PAGE]
+const queryKeys =
+    [CONST.SORT_KEY, CONST.SORT_TYPE, CONST.USER_SEARCH,
+    CONST.USER_ID, CONST.USER_NAME, CONST.USER_SUSPEND, CONST.PAGE]
 
 export default function useQueryParams() {
     const [queryParams, setQueryParams] = useSearchParams()

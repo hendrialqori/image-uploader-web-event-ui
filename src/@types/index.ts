@@ -6,8 +6,9 @@ export type Success<T> = {
 }
 
 export type Error = {
+    errors: Record<string, []>
     type: string;
-    status: number
+    status: string;
     message: string
 }
 
@@ -27,11 +28,12 @@ export type Query = {
 }
 
 export type User = {
-    id: string,
-    username: string
-    role: string
-    point: number
-    total_upload: number
+    id: string;
+    username: string;
+    role: string;
+    point: number;
+    total_upload: number;
+    is_suspend: boolean;
     created_at: Date | string
     updated_at: Date | string
 }
@@ -40,7 +42,7 @@ export type Image = {
     id: string;
     title: string;
     category: string;
-    point: string;
+    point: number;
     user: {
         id: string,
         username: string

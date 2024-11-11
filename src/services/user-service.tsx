@@ -1,6 +1,6 @@
 import type { Success, Error, Query, User, Image } from "#/@types";
 import useAxios from "#/hooks/use-axios";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 
 export function useGetUsers(query: Query) {
@@ -40,5 +40,39 @@ export function useGetUserUploads(userId: string) {
         staleTime: 1 * (60 * 1000), // 1 minute,
         enabled: Boolean(userId)
     })
-
 }
+
+export function useSuspendUser() {
+    const axiosInstance = useAxios()
+    const instance = axiosInstance()
+
+    type Payload = { userId: string }
+
+    const PUT = async ({ userId }: Payload) => {
+        const req = await instance.put(`/user/suspend/${userId}`)
+        return req.data
+    }
+
+    return useMutation<Success<null>, AxiosError<Error>, Payload>({
+        mutationKey: ["USER/SUSPEND"],
+        mutationFn: PUT
+    })
+}
+
+
+export function useRecoveryUser() {
+    const axiosInstance = useAxios()
+    const instance = axiosInstance()
+
+    type Payload = { userId: string }
+
+    const PUT = async ({ userId }: Payload) => {
+        const req = await instance.put(`/user/recovery/${userId}`)
+        return req.data
+    }
+
+    return useMutation<Success<null>, AxiosError<Error>, Payload>({
+        mutationKey: ["USER/RECOVER"],
+        mutationFn: PUT
+    })
+} 

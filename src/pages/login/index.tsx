@@ -29,14 +29,10 @@ export default function LoginPage() {
         login.mutate({ username, password }, {
             onSuccess: (result) => {
                 const token = result.data.token;
-                const role = result.data.role
                 localStorage.setItem(TOKEN, token)
 
-                if (role === "MEMBER") {
-                    navigate("/upload")
-                } else {
-                    navigate("/admin/dashboard")
-                }
+                navigate("/upload")
+
 
             },
             onError: (error) => {
@@ -59,9 +55,11 @@ export default function LoginPage() {
     return (
         <main>
             <header className="p-5">
-                <h1 className="text-sm text-center md:text-left font-semibold">[Company_name/Logo]</h1>
+                <div>
+                    <img src="/pertamina-logo.png" className="size-8" alt="logo" width={30} height={30} />
+                </div>
             </header>
-            <section className="min-h-[calc(100dvh_-_60px)] w-[calc(100%_-_50px)] max-w-[320px] mx-auto flex-center flex-col space-y-5 md:space-y-7">
+            <section className="min-h-[calc(100dvh_-_80px)] w-[calc(100%_-_50px)] max-w-[320px] mx-auto flex-center flex-col space-y-5 md:space-y-7">
                 <div className="text-center  !-tracking-wide">
                     <h2 className="text-xl md:text-3xl font-semibold">Welcome back, Folks!</h2>
                     <p className="text-xs md:text-base text-slate-500">Please enter your details below</p>
@@ -97,12 +95,13 @@ export default function LoginPage() {
                         </div>
                         <button
                             type="submit"
-                            className="text-xs md:text-base font-medium text-white text-center bg-black hover:bg-black/70 disabled:bg-black/70 w-full p-3 rounded-[.63rem] flex-center"
+                            className="relative overflow-hidden text-xs md:text-base font-medium text-white text-center bg-black hover:bg-black/70 disabled:bg-black/70 w-full p-3 rounded-[.63rem] flex-center"
                             disabled={login.isPending}
                         >
-                            {login.isPending ?
+                            <span className="!-tracking-wide select-none">Login</span>
+                            {login.isPending &&
                                 <ButtonSpinnerLoading />
-                                : <span className="!-tracking-wide select-none">Login</span>}
+                            }
                         </button>
                     </form>
                 </section>

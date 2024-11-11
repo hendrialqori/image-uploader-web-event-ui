@@ -27,4 +27,6 @@ export const PAGE = "page";
 export const SORT_TYPE = "sort_type";
 export const SORT_KEY = "sort_key";
 export const USER_SEARCH = "user_search";
-export const USER_SELECT = "user_select";
+export const USER_ID = "user_id";
+export const USER_NAME = "user_name";
+export const USER_SUSPEND = "user_suspend"

@@ -15,7 +15,9 @@ export default function ImageUploadPage() {
     return (
         <main className='bg-[#F9F9F9] pb-20'>
             <header className="p-5">
-                <h1 className="text-sm text-center md:text-left font-semibold !-tracking-wider">[Company_name/Logo]</h1>
+                <div>
+                    <img src="/pertamina-logo.png" className="size-8" alt="logo" width={30} height={30} />
+                </div>
             </header>
             <section className="w-[calc(100%_-_50px)] max-w-2xl mx-auto space-y-6">
                 <Profile />
