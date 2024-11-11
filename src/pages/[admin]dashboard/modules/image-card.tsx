@@ -28,27 +28,27 @@ export default function ImageCard({ image }: Props) {
 
     return (
         <React.Fragment>
-            <div className="grid grid-cols-7 border-b border-gray-200 py-4 w-full">
-                <img src={STATIC + "/" + image.title} alt="image" className="size-10 md:size-14 rounded-xl object-cover border border-gray-300" crossOrigin="anonymous" />
-                <div className="col-span-4">
-                    <p className="text-xs font-medium text-gray-500">Category image</p>
-                    <h3 className="text-sm font-medium">{image.category}</h3>
+            <div className="grid grid-cols-5 md:grid-cols-7 border-b border-gray-200 py-4 w-full gap-5 md:gap-0">
+                <img src={STATIC + "/" + image.title} alt="image" className="size-8 md:size-14 rounded-xl object-cover border border-gray-300" crossOrigin="anonymous" />
+                <div className="col-span-2 md:col-span-4">
+                    <p className="text-[0.65rem] md:text-xs font-medium text-gray-500">Category image</p>
+                    <h3 className="text-[0.65rem] md:text-sm font-medium">{image.category}</h3>
                 </div>
                 <div>
-                    <p className="text-xs font-medium text-gray-500">Point</p>
-                    <h3 className="text-sm font-semibold">{image.point}</h3>
+                    <p className="text-[0.65rem] md:text-xs font-medium text-gray-500">Point</p>
+                    <h3 className="text-[0.65rem] md:text-sm font-semibold">{image.point}</h3>
                 </div>
-                <div className="flex-center gap-4">
+                <div className="flex-center items-start gap-2 md:gap-4">
                     <button className="hover:outline hover:outline-black rounded-md p-1" onClick={showModal("update")}>
-                        <TbPencil className="text-2xl" />
+                        <TbPencil className="text-base md:text-2xl" />
                     </button>
                     <button className="hover:outline hover:outline-black rounded-md p-1" onClick={showModal("delete")}>
-                        <FaRegTrashCan className="text-2xl" />
+                        <FaRegTrashCan className="text-base md:text-2xl" />
                     </button>
                 </div>
             </div>
-            <ModalUpdateImage isOpen={modal.update} onClose={hideModal} />
-            <ModalDeleteImage isOpen={modal.delete} onClose={hideModal} />
+            <ModalUpdateImage isOpen={modal.update} image={image} onClose={hideModal} />
+            <ModalDeleteImage isOpen={modal.delete} image={image} onClose={hideModal} />
         </React.Fragment>
     )
 }

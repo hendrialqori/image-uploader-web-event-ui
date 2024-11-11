@@ -26,13 +26,13 @@ export default function Pagination({ metadata }: Props) {
 
     return (
         <div className="flex-center justify-between" aria-label="pagination">
-            <p className="text-xs font-medium text-gray-500">Show {metadata?.from ?? 0} - {metadata?.to ?? 0} from {metadata?.total_row} participants</p>
+            <p className="text-[0.65rem] md:text-xs font-medium text-gray-500">Show {metadata?.from ?? 0} - {metadata?.to ?? 0} from {metadata?.total_row} participants</p>
             <div className="flex-center gap-2">
                 <button className="bg-gray-100 border border-gray-200 rounded-md p-1 hover:outline hover:outline-black" onClick={decreasePage}>
-                    <MdKeyboardDoubleArrowLeft className="text-xl" />
+                    <MdKeyboardDoubleArrowLeft className="text-base md:text-xl" />
                 </button>
                 <button className="bg-gray-100 border border-gray-200 rounded-md p-1 hover:outline hover:outline-black" onClick={increasePage}>
-                    <MdKeyboardDoubleArrowRight className="text-xl" />
+                    <MdKeyboardDoubleArrowRight className="text-base md:text-xl" />
                 </button>
             </div>
         </div>

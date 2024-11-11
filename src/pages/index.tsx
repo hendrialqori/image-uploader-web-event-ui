@@ -1,7 +1,9 @@
-import AdminDashboardPage from "./admin/dashboard";
+import AdminDashboardPage from "./[admin]dashboard";
+import AdminLoginPage from "./[admin]login";
+import AdminLeaderboardPage from "./[admin] leaderboard";
+
 import ImageUploadPage from "./upload";
-import LeaderboardPage from "./leaderboard";
 import LoginPage from "./login";
 import RegisterPage from "./register";
 
-export { AdminDashboardPage, ImageUploadPage, LeaderboardPage, LoginPage, RegisterPage }
+export { AdminDashboardPage, AdminLoginPage, AdminLeaderboardPage, ImageUploadPage, LoginPage, RegisterPage }

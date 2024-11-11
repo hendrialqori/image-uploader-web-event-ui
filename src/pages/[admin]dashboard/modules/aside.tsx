@@ -13,17 +13,17 @@ export default function Aside() {
 
     return (
         <React.Fragment>
-            <aside className="w-14 min-h-dvh bg-gray-100 flex-center flex-col justify-between py-3 sticky top-0">
+            <aside className="w-9 md:w-14 h-dvh bg-gray-100 flex-center flex-col justify-between py-3 sticky top-0">
                 <div className="space-y-5">
                     <div>
-                        <img src="/pertamina-logo.png" className="size-8" alt="logo" width={30} height={30} />
+                        <img src="/pertamina-logo.png" className="size-6 md:size-8" alt="logo" width={30} height={30} />
                     </div>
-                    <div className="bg-white rounded-lg w-max p-2 border-2 border-gray-200 hover:outline hover:outline-black">
-                        <RxDashboard className="text-2xl" />
+                    <div className="bg-white rounded-md md:rounded-lg w-max p-1 md:p-2 border-2 border-gray-200 hover:outline hover:outline-black">
+                        <RxDashboard className="text-base md:text-2xl" />
                     </div>
                 </div>
-                <button className="bg-white rounded-lg w-max p-2 border-2 border-gray-200 hover:outline hover:outline-black" onClick={modalLogout("show")}>
-                    <PiSignOut className="text-xl" />
+                <button className="bg-white rounded-md md:rounded-lg w-max p-1 md:p-2 border-2 border-gray-200 hover:outline hover:outline-black" onClick={modalLogout("show")}>
+                    <PiSignOut className="text-sm md:text-xl" />
                 </button>
             </aside>
             <ModalLogout isOpen={isLogout} onClose={modalLogout("hide")} />

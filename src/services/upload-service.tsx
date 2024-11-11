@@ -27,3 +27,42 @@ export function useUploadImage(cb: (event: AxiosProgressEvent) => void) {
     })
 
 }
+
+export function useUpdateImage() {
+    const axiosInstance = useAxios()
+    const instance = axiosInstance()
+
+    type Payload = {
+        id: string;
+        point: number;
+    }
+
+    const PUT = async ({ id, point }: Payload) => {
+        const req = await instance.put(`/image/update-score/${id}`, { point })
+        return req.data
+    }
+
+    return useMutation<Success<string>, AxiosError<Error>, Payload>({
+        mutationKey: ["UPDATE/IMAGE"],
+        mutationFn: PUT
+    })
+}
+
+export function useDeleteImage() {
+    const axiosInstance = useAxios()
+    const instance = axiosInstance()
+
+    type Payload = {
+        id: string;
+    }
+
+    const DELETE = async ({ id }: Payload) => {
+        const req = await instance.delete(`/image/remove/${id}`)
+        return req.data
+    }
+
+    return useMutation<Success<string>, AxiosError<Error>, Payload>({
+        mutationKey: ["DELETE/IMAGE"],
+        mutationFn: DELETE
+    })
+}
