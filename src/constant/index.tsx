@@ -3,6 +3,7 @@ export const API = SERVER + "/api/v1"
 export const STATIC = SERVER + "/upload"
 
 export const TOKEN = "token"
+export const LEADERBOARD = "leaderboard"
 
 // error type response
 export const VALIDATION_ERROR = "VALIDATION_ERROR"
