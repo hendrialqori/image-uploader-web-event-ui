@@ -1,9 +1,12 @@
-import AdminDashboardPage from "./[admin]dashboard";
-import AdminLoginPage from "./[admin]login";
-import AdminLeaderboardPage from "./[admin] leaderboard";
+import { lazy } from "react";
 
-import ImageUploadPage from "./upload";
-import LoginPage from "./login";
-import RegisterPage from "./register";
+const AdminDashboardPage = lazy(() => import("./[admin]dashboard"))
+const AdminLoginPage = lazy(() => import("./[admin]login"))
+const AdminLeaderboardPage = lazy(() => import("./[admin] leaderboard"))
+
+const ImageUploadPage = lazy(() => import("./upload"))
+const LoginPage = lazy(() => import("./login"))
+const RegisterPage = lazy(() => import("./register"))
+
 
 export { AdminDashboardPage, AdminLoginPage, AdminLeaderboardPage, ImageUploadPage, LoginPage, RegisterPage }
