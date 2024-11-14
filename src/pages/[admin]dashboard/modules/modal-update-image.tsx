@@ -6,7 +6,7 @@ import type { Image } from "#/@types";
 import { STATIC } from "#/constant";
 import { useQueryClient } from "@tanstack/react-query";
 import { mockErrorResponse } from "#/utils";
-import { ButtonSpinnerLoading } from "#/components/ui/lazy";
+import * as Lazy from "#/components/ui/lazy";
 
 type Props = {
     isOpen: boolean;
@@ -95,7 +95,7 @@ export default function ModalUpdateImage({ isOpen, image, onClose }: Props) {
                 <div className="grid grid-cols-2 gap-3 px-5 pb-7">
                     <button onClick={onClose} className="text-xs md:text-sm font-medium bg-gray-100 hover:outline hover:outline-black text-black rounded-md py-[0.65rem]" disabled={isPending}>Cancel</button>
                     <button onClick={updateAction} className="relative overflow-hidden text-xs md:text-sm font-medium bg-black hover:outline hover:outline-black text-white rounded-md py-[0.65rem]" disabled={isPending}>
-                        {isPending && <ButtonSpinnerLoading />}
+                        {isPending && <Lazy.Spinner />}
                         Save
                     </button>
                 </div>

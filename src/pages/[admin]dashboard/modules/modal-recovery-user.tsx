@@ -1,5 +1,5 @@
 import Portal from "#/components/portal";
-import { ButtonSpinnerLoading } from "#/components/ui/lazy";
+import * as Lazy from "#/components/ui/lazy";
 import { USER_ID, USER_NAME, USER_SUSPEND } from "#/constant";
 import useQueryParams from "#/hooks/user-query-params";
 import { useRecoveryUser } from "#/services/user-service";
@@ -61,7 +61,7 @@ export default function ModalRecoveryUser({ isOpen, onClose }: Props) {
                 <div className="grid grid-cols-2 gap-3 px-5">
                     <button onClick={onClose} className="text-xs md:text-sm font-medium bg-gray-100 hover:outline hover:outline-black text-black rounded-md py-2 px-6" disabled={isPending}>Cancel</button>
                     <button onClick={recoveryAction} className="text-xs md:text-sm font-medium bg-green-500 hover:outline hover:outline-green-600 text-white rounded-md py-2 px-6" disabled={isPending}>
-                        {isPending && <ButtonSpinnerLoading />}
+                        {isPending && <Lazy.Spinner />}
                         Recovery
                     </button>
                 </div>
