@@ -6,17 +6,21 @@ import {
     RouterProvider, Navigate
 } from "react-router-dom"
 import * as Page from "#/pages"
+import * as Boundary from "#/components/ui/boundary"
 import ProtectRoute from "./protect-route"
 
 function appRoutes() {
     return createBrowserRouter(
         createRoutesFromElements(
             <React.Fragment>
-                <Route path="/">
+                <Route path="/" errorElement={<Boundary.RouterError />}>
                     <Route index element={<Navigate to="/upload" />} />
 
                     <Route path="auth">
-                        <Route path="login" element={<Page.LoginPage />} />
+                        <Route
+                            path="login"
+                            element={<Page.LoginPage />}
+                        />
                         <Route path="register" element={<Page.RegisterPage />} />
                     </Route>
 
