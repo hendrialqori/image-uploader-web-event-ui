@@ -21,7 +21,8 @@ export function useGetUsers(query: Query) {
     return useQuery<Success<User[]>, AxiosError<Error>>({
         queryKey: ["USERS", query],
         queryFn: ({ signal }) => GET({ signal }),
-        staleTime: 1 * (60 * 1000) // 1 minute,
+        staleTime: 1 * (60 * 1000), // 1 minute,
+        throwOnError: true
     })
 }
 
@@ -37,8 +38,9 @@ export function useGetUserUploads(userId: string) {
     return useQuery<Success<Image[]>, AxiosError<Error>>({
         queryKey: ["USER/IMAGES", userId],
         queryFn: ({ signal }) => GET({ signal }),
-        staleTime: 1 * (60 * 1000), // 1 minute,
-        enabled: Boolean(userId)
+        // staleTime: 1 * (60 * 1000), // 1 minute,
+        enabled: Boolean(userId),
+        throwOnError: true
     })
 }
 

@@ -7,11 +7,10 @@ import { GrCloudUpload } from "react-icons/gr";
 import { FaRotateRight } from "react-icons/fa6";
 
 import * as CONST from "#/constant"
-import { cn, mockErrorResponse } from "#/utils"
+import { mockErrorResponse } from "#/utils"
 import image_icon from "#/assets/image-icon.svg"
 import { useUploadImage } from "#/services/upload-service";
-import { FileHistory } from "#/@types";
-import SuccessAnimation from "./success-animation";
+import ModalSuccessUpload from "./modal-success-upload";
 
 const IMAGE_OPTIONS = [
     CONST.REUSABLE_UTENSILS, CONST.NON_REUSABLE_UTENSILS, CONST.WATER_CONTAINER_TUMBLER,
@@ -19,11 +18,8 @@ const IMAGE_OPTIONS = [
     CONST.ELECTRIC_VEHICLE, CONST.LITTER_FILTER, CONST.SINGLE_WASTE_BIN
 ]
 
-type Props = {
-    onUpdateHistory: (data: FileHistory) => void
-}
 
-export default function UploadArea(props: Props) {
+export default function UploadArea() {
     const queryClient = useQueryClient()
 
     const [file, setFile] = React.useState<File | null>(null)
@@ -106,12 +102,12 @@ export default function UploadArea(props: Props) {
     }
 
     function validationSize(image: File) {
-        const ALLOW_MAX_SIZE = 2_300_000; //2mb
+        const ALLOW_MAX_SIZE = 10_300_000; //10mb
         const fileSize = image.size
 
         if (fileSize > ALLOW_MAX_SIZE) {
             toast.error("Image validation error", {
-                description: "Max size is 2MB"
+                description: "Max size is 10MB"
             })
             return false
         }
@@ -175,17 +171,7 @@ export default function UploadArea(props: Props) {
                 toast.success(message)
 
                 setTimeout(() => queryClient.invalidateQueries({ queryKey: ["CREDENTIAL"] }), 1000)
-
-                // upload history
-                const history = {
-                    file: preview as string, // base64
-                    type: option,
-                    metadata: {
-                        name: file?.name ?? "",
-                        size: file?.size ?? 0
-                    }
-                }
-                props.onUpdateHistory(history)
+                setTimeout(() => queryClient.invalidateQueries({ queryKey: ["USER/IMAGES"] }), 1500)
 
                 // reset state
                 setFile(null)
@@ -215,23 +201,23 @@ export default function UploadArea(props: Props) {
 
     return (
         <React.Fragment>
-            <div className="space-y-6 pt-8 md:pt-16">
+            <div className="space-y-6 py-8">
                 <div className="flex-center flex-col md:flex-row gap-3 justify-between text-sm md:text-base" aria-label="title">
-                    <h2 className="font-semibold !-tracking-wide">Upload your image below</h2>
+                    <h2 className="font-semibold text-pertamina-navy text-lg tracking-wide">Upload  your image</h2>
                     <select
-                        className={cn("text-xs md:text-sm bg-white border border-gray-200 rounded-md p-2 font-medium disabled:opacity-50", option ? "opacity-100" : "opacity-70")}
+                        className="text-sm rounded-md p-2 font-medium text-pertamina-navy bg-[#95DAFF]"
                         value={option}
                         onChange={handleChangeImageOption}
                         disabled={isPending}
                     >
-                        <option value="" disabled>Select image type</option>
+                        <option value="" disabled>Category image</option>
                         {IMAGE_OPTIONS.map((value, i) => (
                             <option key={i} value={value}>{value}</option>
                         ))}
                     </select>
                 </div>
                 <div
-                    className="w-full bg-white border-2 border-dashed border-gray-200 rounded-xl flex-center py-16 select-none"
+                    className="w-full bg-white border-2 border-dashed border-pertamina-sky-blue rounded-xl flex-center py-8 select-none"
                     onDragOver={handleFileEnter}
                     onDragLeave={handleFileLeave}
                     onDrop={handleFileDroped}
@@ -239,20 +225,20 @@ export default function UploadArea(props: Props) {
                     aria-disabled={isPending}
                     key={preview as string}
                 >
-                    <div className="flex-center flex-col gap-2 md:gap-3">
-                        <motion.img src={image_icon} className="size-10 md:size-16" alt="image-icon" initial={{ y: 0 }} animate={{ y: activeDropzone ? "-1rem" : "0" }} />
-                        <div>
+                    <div className="flex-center flex-col gap-2">
+                        <motion.img src={image_icon} className="size-14" alt="image-icon" initial={{ y: 0 }} animate={{ y: activeDropzone ? "-1rem" : "0" }} />
+                        <div className="text-pertamina-sky-blue">
                             <div className="flex-center gap-1 text-sm md:text-base">
-                                {activeDropzone ? <p className="font-medium text-[#2F5C8B]">Just like that!</p> : (
+                                {activeDropzone ? <p className="">Just like that!</p> : (
                                     <React.Fragment>
-                                        <h3 className="font-medium text-[#2F5C8B]">Drop your image here,</h3>
-                                        <label htmlFor="image" className="font-bold text-[#3293FF] hover:underline cursor-pointer">or browse</label>
+                                        <h3 className="">Drop your image here,</h3>
+                                        <label htmlFor="image" className="underline cursor-pointer">or browse</label>
                                     </React.Fragment>
                                 )}
                             </div>
+                            <p className="text-[0.65rem] text-center">Support JPG, JPEG, PNG</p>
                             <input id="image" type="file" onChange={handleChangeUploadImage} accept=".jpeg, .jpeg, .png" className="hidden" />
                         </div>
-                        <p className="text-xs md:text-sm text-gray-400">Support JPG, JPEG, PNG</p>
                     </div>
                 </div>
                 {preview && (
@@ -260,21 +246,18 @@ export default function UploadArea(props: Props) {
                         <img src={preview as string} alt="tumbnail" className="size-10 md:size-14 rounded-xl object-cover border border-gray-300" />
                         <div className="w-full flex-center gap-5">
                             <div className="w-full space-y-2">
-                                <div className="flex-center justify-start gap-2">
-                                    <p className="font-semibold !-tracking-wide text-xs md:text-sm">{file?.name}</p>
-                                    <p className="text-center text-[0.65rem] md:text-xs bg-gray-200 rounded-full px-2 py-[0.05rem]" aria-label="badge">{option}</p>
-                                </div>
+                                <p className="text-xs text-pertamina-navy">{file?.name}</p>
                                 <Progress value={progressUpload} />
-                                <p className="text-gray-400 text-[0.65rem] md:text-xs">{(file?.size! / 1000_000).toFixed(2)} MB ({progressUpload}%)</p>
+                                <p className="text-xs text-pertamina-blue">{(file?.size! / 1000_000).toFixed(2)} MB ({progressUpload}%)</p>
                             </div>
                             <button className="hover:outline hover:outline-black rounded-lg p-1" onClick={uploadImageAction} disabled={isPending}>
-                                {isError ? <FaRotateRight className="text-xl text-red-500" /> : <GrCloudUpload className="text-2xl" />}
+                                {isError ? <FaRotateRight className="text-xl text-red-500" /> : <GrCloudUpload className="text-2xl text-pertamina-sky-blue" />}
                             </button>
                         </div>
                     </div>
                 )}
             </div>
-            <SuccessAnimation
+            <ModalSuccessUpload
                 isOpen={isShowAnimation}
                 onClose={() => setShowAnimation(false)}
             />
@@ -284,12 +267,12 @@ export default function UploadArea(props: Props) {
 
 function Progress({ value }: { value: number }) {
     return (
-        <div className="relative overflow-hidden w-full  h-[0.50rem] md:h-[0.65rem] rounded-2xl bg-gray-200" aria-label="progress">
+        <div className="relative overflow-hidden w-full  h-[0.50rem] md:h-[0.65rem] rounded-2xl bg-pertamina-sky-blue/30" aria-label="progress">
             <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${value}%` }}
                 transition={{ bounce: false, duration: 0.1 }}
-                className="h-[0.50rem] md:h-[0.65rem] bg-[#3293FF] transition duration-300"
+                className="h-[0.50rem] md:h-[0.65rem] bg-pertamina-navy transition duration-300"
                 aria-label="progress-value"
             />
         </div>

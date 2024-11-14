@@ -40,7 +40,7 @@ export default function Popup({ children }: Props) {
                     transition={{ bounce: false, duration: .1, delay: 0.08 }}
                     className="bg-slate-50 rounded-lg shadow-md p-1 w-36 absolute -left-28" aria-label="popup-body">
                     <button
-                        className="px-5 py-2 rounded-lg w-full flex-center gap-3 hover:bg-slate-100 transition duration-300"
+                        className="px-5 py-2 rounded-lg w-full flex-center gap-3 hover:bg-slate-100 transition duration-300 text-pertamina-blue"
                         type="button"
                         onClick={modalLogout("show")}
                     >

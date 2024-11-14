@@ -57,3 +57,10 @@ export type FileHistory = {
         size: number
     }
 }
+
+export type Placement = {
+    rank: number | null
+    username: string | null;
+    point: number | null;
+    total_upload: number | null
+} 

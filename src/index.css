@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+/* * {
     font-family: "Inter", sans-serif;
-}
+} */
 
 @layer components {
     .flex-center {

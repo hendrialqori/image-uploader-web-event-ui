@@ -10,7 +10,7 @@ import { VscEyeClosed } from "react-icons/vsc";
 import { LoginSchemeType, loginScheme } from "./scheme"
 import { cn, mockErrorResponse } from "#/utils"
 import { useLogin } from "#/services/auth-service"
-import { ButtonSpinnerLoading } from "#/components/ui/lazy"
+import * as Lazy from "#/components/ui/lazy"
 import { TOKEN } from "#/constant"
 
 export default function AdminLoginPage() {
@@ -53,12 +53,7 @@ export default function AdminLoginPage() {
 
     return (
         <main>
-            <header className="p-5">
-                <div>
-                    <img src="/pertamina-logo.png" className="size-8" alt="logo" width={30} height={30} />
-                </div>
-            </header>
-            <section className="min-h-[calc(100dvh_-_80px)] w-[calc(100%_-_50px)] max-w-[320px] mx-auto flex-center flex-col space-y-5 md:space-y-7">
+            <section className="min-h-dvh w-[calc(100%_-_50px)] max-w-[320px] mx-auto flex-center flex-col space-y-5 md:space-y-7">
                 <div className="text-center  !-tracking-wide">
                     <h2 className="text-xl md:text-3xl font-semibold">Welcome back, Admin!</h2>
                     <p className="text-xs md:text-base text-slate-500">Please enter your details below</p>
@@ -99,7 +94,7 @@ export default function AdminLoginPage() {
                         >
                             <span className="!-tracking-wide select-none">Login</span>
                             {login.isPending &&
-                                <ButtonSpinnerLoading />
+                                <Lazy.Spinner />
                             }
                         </button>
                     </form>
