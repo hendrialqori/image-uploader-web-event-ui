@@ -48,6 +48,7 @@ export function useCredential() {
     return useQuery<Success<User>, AxiosError<Error>>({
         queryKey: ["CREDENTIAL"],
         queryFn: ({ signal }) => GET({ signal }),
-        staleTime: 1 * (60 * 1000) // 1 minute,
+        // staleTime: 1 * (60 * 1000), // 1 minute,
+        throwOnError: true
     })
 }
