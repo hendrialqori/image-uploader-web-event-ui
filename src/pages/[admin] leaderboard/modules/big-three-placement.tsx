@@ -31,8 +31,8 @@ function TopRank({ rank, username, point, total_upload }: Placement) {
         <figure className="flex flex-col items-center gap-3">
             <img src={CUP_ICON[rank as keyof typeof CUP_ICON]} alt="cup-ranking-icon" className="size-8 md:size-auto" />
             <figcaption className="text-center">
-                <p className="text-xs md:text-xl text-white">{username}</p>
-                <p className="text-[0.65rem] md:text-base text-pertamina-sky-blue">{point} pts ({total_upload} photos)</p>
+                <p className="text-xs md:text-xl text-white">{username ?? "[Unknown]"}</p>
+                <p className="text-[0.65rem] md:text-base text-pertamina-sky-blue">{point ?? 0} pts ({total_upload ?? 0} photos)</p>
             </figcaption>
         </figure>
     )
