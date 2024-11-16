@@ -1,6 +1,6 @@
 export const SERVER = import.meta.env.VITE_SERVER;
 export const API = SERVER + "/api/v1"
-export const STATIC = SERVER + "/uploads"
+export const STATIC = API + "/uploads"
 
 export const TOKEN = "token"
 export const LEADERBOARD = "leaderboard"
