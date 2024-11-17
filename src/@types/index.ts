@@ -61,6 +61,7 @@ export type FileHistory = {
 export type Placement = {
     rank: number | null
     username: string | null;
+    is_suspend: boolean | null;
     point: number | null;
     total_upload: number | null
 } 

@@ -6,7 +6,8 @@ import { LEADERBOARD, SERVER } from "#/constant";
 import type { Placement } from "#/@types";
 
 const client = io(SERVER, {
-    autoConnect: false
+    autoConnect: false,
+    path: "/ws"
 })
 
 export default function Placement() {
@@ -27,7 +28,8 @@ export default function Placement() {
     React.useEffect(() => {
         client.on(LEADERBOARD, (data: Placement[]) => {
             const state = data;
-            const empty_state: Placement = { rank:null, username: null, point: null, total_upload: null };
+            console.log(state)
+            const empty_state: Placement = { rank: null, username: null, is_suspend: false, point: null, total_upload: null };
             const temp = [
                 ...state,
                 ...Array.from({ length: 10 - state.length }).fill(empty_state) as Placement[]
