@@ -81,7 +81,7 @@ export default function LoginPage() {
                             />
                             <div
                                 role="button"
-                                className="absolute right-4 top-1/2 -translate-y-1/2 select-none"
+                                className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 select-none"
                                 onClick={toggleVisiblePassword}
                             >
                                 {!passwordVisible ? <IoMdEye className="text-2xl" /> : <IoIosEyeOff className="text-2xl" />}

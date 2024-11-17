@@ -7,7 +7,7 @@ export default function ImageUploadPage() {
 
     return (
         <main className="font-lilita-one min-h-dvh w-full flex-center px-3 py-16"
-            style={{ backgroundImage: "url('/pertamina-1.webp')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}
+            style={{ backgroundImage: "url('/pertamina-4.webp')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}
         >
             <div className="fixed inset-0 bg-black/50" aria-label="overlay" />
             <div className='relative bg-white w-[512px] mx-auto rounded-[0.65rem]'>

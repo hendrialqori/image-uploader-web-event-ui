@@ -74,7 +74,7 @@ export default function ModalUpdateImage({ isOpen, image, onClose }: Props) {
 
     return (
         <Portal isOpen={isOpen}>
-            <div className="relative overflow-hidden bg-white rounded-lg h-max max-w-lg">
+            <div className="relative overflow-hidden bg-white rounded-lg h-max max-w-lg font-lilita-one">
                 <div className="h-[300px] bg-gray-400">
                     <img src={STATIC + "/" + image.title} alt="image" width={200} height={300} className="size-full object-contain" crossOrigin="anonymous" />
                 </div>

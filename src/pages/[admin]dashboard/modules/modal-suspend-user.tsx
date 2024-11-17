@@ -52,7 +52,7 @@ export default function ModalSuspendUser({ isOpen, onClose }: Props) {
 
     return (
         <Portal isOpen={isOpen}>
-            <div className="relative bg-white rounded-lg w-[320px] h-max px-5 py-8 space-y-7">
+            <div className="relative bg-white rounded-lg w-[320px] h-max px-5 py-8 space-y-7 font-lilita-one">
                 <div className="flex-center flex-col gap-3">
                     <FaBan className="text-2xl text-red-500"/>
                     <div className="text-sm font-medium text-center">

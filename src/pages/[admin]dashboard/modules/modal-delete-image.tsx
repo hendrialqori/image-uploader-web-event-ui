@@ -50,7 +50,7 @@ export default function ModalDeleteImage({ isOpen, image, onClose }: Props) {
 
     return (
         <Portal isOpen={isOpen}>
-            <div className="relative bg-white rounded-lg w-[320px] h-max px-5 py-8 space-y-7">
+            <div className="relative bg-white rounded-lg w-[320px] h-max px-5 py-8 space-y-7 font-lilita-one">
                 <div className="flex-center flex-col gap-3">
                     <img src={STATIC + "/" + image.title} alt="image" className="size-10 md:size-14 rounded-xl object-cover border border-gray-300" crossOrigin="anonymous" />
                     <div className="text-sm font-medium text-center">

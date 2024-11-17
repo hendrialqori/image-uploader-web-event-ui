@@ -4,7 +4,8 @@ export const registerScheme = z.object({
     username: z.string().min(6, { message: "Require 6 characters(s)" })
         .max(20, { message: "Max only 20 character(s)" })
         .regex(/^\S*$/, { message: "Whitespace not allowed" }),
-    password: z.string().min(1, { message: "Required" }).max(225, { message: "Max only 225 character(s)" }),
+    password: z.string().min(6, { message: "Require 6 characters(s)" })
+        .max(225, { message: "Max only 225 character(s)" }),
     confirmPassword: z.string()
 })
 

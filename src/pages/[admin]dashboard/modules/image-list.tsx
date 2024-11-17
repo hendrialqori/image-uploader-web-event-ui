@@ -44,14 +44,14 @@ export default function ImageList() {
             <div className="space-y-5 col-span-1 xl:col-span-2">
                 <div className="space-y-1 md:space-y-0">
                     <div className="flex-center flex-col items-start md:flex-row justify-start gap-1 md:gap-2">
-                        <h2 className="text-sm md:text-lg font-semibold !-tracking-wide">Images from {userName}</h2>
+                        <h2 className="text-sm md:text-lg font-semibold tracking-wide">Images from {userName}</h2>
                         {userSuspend && !parseUserSuspend && (
                             <button
                                 className="flex-center justify-start gap-1 bg-red-500 text-white rounded-full px-2 md:px-3 py-1 hover:outline hover:outline-red-600"
                                 onClick={handleModal("suspend")}
                             >
                                 <FaBan />
-                                <span className="text-[0.65rem] md:text-xs font-semibold">Suspend {userName}</span>
+                                <span className="text-[0.65rem] md:text-xs font-semibold font-inter">Suspend {userName}</span>
                             </button>
                         )}
 
@@ -61,7 +61,7 @@ export default function ImageList() {
                                 onClick={handleModal("recovery")}
                             >
                                 <LuRotateCw />
-                                <span className="text-[0.65rem] md:text-xs font-semibold">Recovery {userName}</span>
+                                <span className="text-[0.65rem] md:text-xs font-semibold font-inter">Recovery {userName}</span>
                             </button>
                         )}
                     </div>

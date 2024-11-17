@@ -70,7 +70,7 @@ export default function Register() {
 
     return (
         <main className="font-lilita-one min-h-dvh w-full flex-center px-3 overflow-auto py-16"
-            style={{ backgroundImage: "url('/pertamina-2.webp')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}
+            style={{ backgroundImage: "url('/pertamina-3.webp')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}
         >
             <div className="fixed inset-0 bg-black/50" aria-label="overlay" />
             <div className="relative bg-white w-full max-w-[380px] mx-auto rounded-[0.65rem] h-max" aria-label="form">
@@ -85,24 +85,33 @@ export default function Register() {
                         <p className="text-lg">Let’s create your account</p>
                     </div>
                     <div className="text-xl text-pertamina-blue space-y-5">
-                        <Input
-                            type="text"
-                            placeholder="Username"
-                            {...register("username")}
-                            aria-invalid={Boolean(errors.username)}
-                        />
-                        <Input
-                            type="password"
-                            placeholder="******"
-                            {...register("password")}
-                            aria-invalid={Boolean(errors.password)}
-                        />
-                        <Input
-                            type="password"
-                            placeholder="******"
-                            {...register("confirmPassword")}
-                            aria-invalid={Boolean(errors.confirmPassword)}
-                        />
+                        <div className="space-y-1">
+                            <Input
+                                type="text"
+                                placeholder="Username"
+                                {...register("username")}
+                                aria-invalid={Boolean(errors.username)}
+                            />
+                            <p className="text-red-500 text-sm">{errors.username?.message}</p>
+                        </div>
+                        <div className="space-y-1">
+                            <Input
+                                type="password"
+                                placeholder="******"
+                                {...register("password")}
+                                aria-invalid={Boolean(errors.password)}
+                            />
+                            <p className="text-red-500 text-sm">{errors.password?.message}</p>
+                        </div>
+                        <div className="space-y-1">
+                            <Input
+                                type="password"
+                                placeholder="******"
+                                {...register("confirmPassword")}
+                                aria-invalid={Boolean(errors.confirmPassword)}
+                            />
+                            <p className="text-red-500 text-sm">{errors.confirmPassword?.message}</p>
+                        </div>
                     </div>
                     <Button>
                         SIGN UP

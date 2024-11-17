@@ -33,7 +33,7 @@ export default function Profile() {
                 <Popup>
                     {(props) =>
                         <button
-                            className="p-2 rounded-md bg-slate-50 hover:outline active:bg-gray-200 transition duration-300"
+                            className="p-2 rounded-md bg-transparent hover:outline active:bg-gray-200 transition duration-300"
                             onClick={props.toggle}
                         >
                             <RxDotsVertical className="text-xl" />

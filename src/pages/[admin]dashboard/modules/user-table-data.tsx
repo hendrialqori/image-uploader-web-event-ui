@@ -44,14 +44,14 @@ export default function Table({ status, data }: Props) {
                 <div role="table">
                     <div className="grid grid-cols-2 border rounded-t-lg" role="row">
                         <div className="flex-center justify-start gap-1 py-2 md:py-3 px-4">
-                            <p className="!-tracking-wide text-[0.7rem] md:text-[0.8rem] font-medium text-gray-700">Username</p>
+                            <p className="tracking-wide text-[0.7rem] md:text-[0.8rem] font-medium text-gray-700">Username</p>
                             <button className="-space-y-2 hover:outline hover:outline-black rounded-md px-1" onClick={handleQuery("username")}>
                                 <MdKeyboardArrowUp className="text-sm" />
                                 <MdKeyboardArrowDown className="text-sm" />
                             </button>
                         </div>
                         <div className="flex-center justify-start gap-1 py-2 md:py-3 px-2">
-                            <p className="!-tracking-wide text-[0.7rem] md:text-[0.8rem] font-medium text-gray-700">Point</p>
+                            <p className="tracking-wide text-[0.7rem] md:text-[0.8rem] font-medium text-gray-700">Point</p>
                             <button className="-space-y-2 hover:outline hover:outline-black rounded-md px-1" onClick={handleQuery("point")}>
                                 <MdKeyboardArrowUp className="text-sm" />
                                 <MdKeyboardArrowDown className="text-sm" />
@@ -64,16 +64,16 @@ export default function Table({ status, data }: Props) {
                             className={cn(
                                 "grid grid-cols-2 border-x border-b hover:bg-gray-100 transition duration-200 cursor-pointer",
                                 user.id === idUserQuery ? "bg-gray-100 scale-x-[102%]" : "",
-                                user.is_suspend ? "line-through text-red-500" : ""
+                                user.is_suspend ? "line-through text-red-500" : "text-gray-700"
                             )}
                             onClick={selectUserById(user.id, user.username, user.is_suspend)}
                             role="row"
                         >
                             <div className="flex-center justify-start gap-2 py-2 md:py-3 px-4">
-                                <p className="text-[0.7rem] md:text-sm !-tracking-wide font-semibold">{user.username ?? ""}</p>
+                                <p className="text-[0.7rem] md:text-sm tracking-wide font-semibold">{user.username ?? ""}</p>
                             </div>
                             <div className="flex-center justify-start gap-2 py-2 md:py-3 px-2">
-                                <p className="!-tracking-wide font-semibold text-[0.7rem] md:text-sm">{user.point ?? 0}</p>
+                                <p className="tracking-wide font-semibold text-[0.7rem] md:text-sm">{user.point ?? 0}</p>
                                 <span className="text-[0.5rem] md:text-[0.7rem] font-medium bg-gray-100 border border-gray-200 rounded-xl px-3 py-1">{user.total_upload ?? 0} uploaded</span>
                             </div>
 

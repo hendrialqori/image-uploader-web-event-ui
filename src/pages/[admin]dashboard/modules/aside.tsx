@@ -17,6 +17,9 @@ export default function Aside() {
         <React.Fragment>
             <aside className="w-9 md:w-14 h-dvh bg-gray-100 flex-center flex-col justify-between py-3 sticky top-0">
                 <div className="flex-center flex-col gap-3">
+                    <div>
+                        <img src="/lego-icon.png" alt="lego-icon" className="w-8 mb-3" />
+                    </div>
                     <Link to="/admin/dashboard" >
                         <div className="bg-white rounded-md md:rounded-lg w-max p-1 md:p-2 border-2 border-gray-200 hover:outline hover:outline-black">
                             <RxDashboard className="text-base md:text-2xl" />

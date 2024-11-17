@@ -51,7 +51,7 @@ export default function ModalRecoveryUser({ isOpen, onClose }: Props) {
 
     return (
         <Portal isOpen={isOpen}>
-            <div className="relative bg-white rounded-lg w-[320px] h-max px-5 py-8 space-y-7">
+            <div className="relative bg-white rounded-lg w-[320px] h-max px-5 py-8 space-y-7 font-lilita-one">
                 <div className="flex-center flex-col gap-3">
                     <LuRotateCw className="text-2xl text-green-500"/>
                     <div className="text-sm font-medium text-center">
