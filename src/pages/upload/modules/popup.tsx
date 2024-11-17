@@ -2,6 +2,7 @@ import React from "react";
 import { PiSignOutBold } from "react-icons/pi";
 import { motion } from "framer-motion";
 import ModalLogout from "#/components/modal-logout";
+import { useClickOutside } from "#/hooks/use-click-outside";
 
 type ChildrenProps = {
     toggle: () => void
@@ -12,6 +13,9 @@ type Props = {
 }
 
 export default function Popup({ children }: Props) {
+
+    const elementRef = React.useRef<HTMLDivElement | null>(null)
+
     const [showPopup, setPopup] = React.useState(false)
     const [isLogout, setLogout] = React.useState(false)
 
@@ -22,7 +26,6 @@ export default function Popup({ children }: Props) {
     function modalLogout(type: "show" | "hide") {
         return () => {
             if (type === "hide") {
-                setPopup(false)
                 setLogout(false)
             } else {
                 setLogout(true)
@@ -30,9 +33,11 @@ export default function Popup({ children }: Props) {
         }
     }
 
+    useClickOutside(elementRef, () => setPopup(false))
+
     return (
         <React.Fragment>
-            <div className="relative" aria-label="popup" role="dialog">
+            <div ref={elementRef} className="relative" aria-label="popup" role="dialog">
                 {children({ toggle: togglePopup })}
                 <motion.div
                     initial={{ opacity: 0, display: "none" }}
