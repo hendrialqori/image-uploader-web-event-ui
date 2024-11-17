@@ -3,14 +3,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import SparkMD5 from 'spark-md5';
-import { GrCloudUpload } from "react-icons/gr";
-import { FaRotateRight } from "react-icons/fa6";
 
 import * as CONST from "#/constant"
 import { mockErrorResponse } from "#/utils"
 import image_icon from "#/assets/image-icon.svg"
 import { useUploadImage } from "#/services/upload-service";
 import ModalSuccessUpload from "./modal-success-upload";
+import { useCheckIsSuspend } from "#/services/auth-service";
+import { CgSpinner } from "react-icons/cg";
 
 const IMAGE_OPTIONS = [
     CONST.REUSABLE_UTENSILS, CONST.NON_REUSABLE_UTENSILS, CONST.WATER_CONTAINER_TUMBLER,
@@ -38,6 +38,8 @@ export default function UploadArea() {
         setProgressUpload(progress)
     })
 
+    const checkIsSuspend = useCheckIsSuspend()
+
     function imageReader(image: Blob) {
         const reader = new FileReader()
         reader.addEventListener("load", (event) => {
@@ -53,9 +55,13 @@ export default function UploadArea() {
         setOption(value)
     }
 
-    function handleChangeUploadImage(e: React.ChangeEvent<HTMLInputElement>) {
+    async function handleChangeUploadImage(e: React.ChangeEvent<HTMLInputElement>) {
         // disabled when still image uploading
         if (isPending) return
+
+        // check user status suspend or not
+        const allowUpload = await validUserStatus()
+        if (!allowUpload) return
 
         const [currentImage] = e.target.files as FileList
 
@@ -93,12 +99,43 @@ export default function UploadArea() {
         const imageBlob = new Blob([currentImage])
         md5sumReader(imageBlob)
 
+        // check user status suspend or not
+        const allowUpload = await validUserStatus()
+        if (!allowUpload) return
+
+
         const isValidMimeType = validationMimeType(currentImage)
         const isValidSize = validationSize(currentImage)
 
         if (isValidMimeType && isValidSize) {
             setFile(currentImage)
         }
+    }
+
+    async function validUserStatus() {
+        const res = await checkIsSuspend.refetch()
+
+        if (res.isError) {
+            const errorType = mockErrorResponse[res.error.response?.data.type as keyof typeof mockErrorResponse]
+            const errorMessage = res.error.response?.data.message
+            toast.error(errorType, {
+                description: errorMessage
+            })
+            return false
+        }
+
+        return true
+    }
+
+    function validationIimage() {
+        if (!file) {
+            toast.warning("Warning", {
+                description: "Please input image"
+            })
+            return false
+        }
+
+        return true
     }
 
     function validationSize(image: File) {
@@ -139,6 +176,7 @@ export default function UploadArea() {
         return isOption
     }
 
+
     function md5sumReader(blob: Blob) {
         const reader = new FileReader()
 
@@ -155,7 +193,10 @@ export default function UploadArea() {
     }
 
     function uploadImageAction() {
+        const isValidImage = validationIimage()
         const isValidOption = validationImageOption()
+
+        if (!isValidImage) return
         if (!isValidOption) return
 
         const signal = new AbortController().signal
@@ -167,11 +208,6 @@ export default function UploadArea() {
 
         upload.mutate({ formData, signal }, {
             onSuccess: (res) => {
-                const message = res.message ?? "Success upload image"
-                toast.success(message)
-
-                setTimeout(() => queryClient.invalidateQueries({ queryKey: ["CREDENTIAL"] }), 1000)
-                setTimeout(() => queryClient.invalidateQueries({ queryKey: ["USER/IMAGES"] }), 1500)
 
                 // reset state
                 setFile(null)
@@ -179,6 +215,12 @@ export default function UploadArea() {
                 setPreview("")
                 setMd5("")
                 setProgressUpload(0)
+
+                const message = res.message ?? "Success upload image"
+                toast.success(message)
+
+                setTimeout(() => queryClient.invalidateQueries({ queryKey: ["USER/IMAGES"] }), 1000)
+                setTimeout(() => queryClient.invalidateQueries({ queryKey: ["CREDENTIAL"] }), 1200)
 
                 // show modal animation
                 setShowAnimation(true)
@@ -197,7 +239,6 @@ export default function UploadArea() {
     }
 
     const isPending = upload.isPending
-    const isError = upload.isError
 
     return (
         <React.Fragment>
@@ -217,7 +258,7 @@ export default function UploadArea() {
                     </select>
                 </div>
                 <div
-                    className="w-full bg-white border-2 border-dashed border-pertamina-sky-blue rounded-xl flex-center py-8 select-none"
+                    className="relative w-full bg-transparent border-2 border-dashed border-pertamina-sky-blue rounded-xl flex-center py-8 select-none overflow-hidden"
                     onDragOver={handleFileEnter}
                     onDragLeave={handleFileLeave}
                     onDrop={handleFileDroped}
@@ -227,7 +268,7 @@ export default function UploadArea() {
                 >
                     <div className="flex-center flex-col gap-2">
                         <motion.img src={image_icon} className="size-14" alt="image-icon" initial={{ y: 0 }} animate={{ y: activeDropzone ? "-1rem" : "0" }} />
-                        <div className="text-pertamina-sky-blue">
+                        <div className="text-pertamina-navy">
                             <div className="flex-center gap-1 text-sm md:text-base">
                                 {activeDropzone ? <p className="">Just like that!</p> : (
                                     <React.Fragment>
@@ -240,6 +281,12 @@ export default function UploadArea() {
                             <input id="image" type="file" onChange={handleChangeUploadImage} accept=".jpeg, .jpeg, .png" className="hidden" />
                         </div>
                     </div>
+                    {checkIsSuspend.fetchStatus === "fetching" && (
+                        <div className="absolute inset-0 bg-pertamina-navy/60 text-white flex-center gap-2">
+                            <CgSpinner className="animate-spin text-base md:text-2xl" />
+                            <p className="text-xs md:text-base">Check possibility upload</p>
+                        </div>
+                    )}
                 </div>
                 {preview && (
                     <div className="flex flex-col md:flex-row items-start md:items-center gap-5 pt-4 md:pt-5">
@@ -250,12 +297,16 @@ export default function UploadArea() {
                                 <Progress value={progressUpload} />
                                 <p className="text-xs text-pertamina-blue">{(file?.size! / 1000_000).toFixed(2)} MB ({progressUpload}%)</p>
                             </div>
-                            <button className="hover:outline hover:outline-black rounded-lg p-1" onClick={uploadImageAction} disabled={isPending}>
-                                {isError ? <FaRotateRight className="text-xl text-red-500" /> : <GrCloudUpload className="text-2xl text-pertamina-sky-blue" />}
-                            </button>
                         </div>
                     </div>
                 )}
+                <button
+                    className="rounded-lg bg-pertamina-blue text-white w-full py-2"
+                    onClick={uploadImageAction}
+                    disabled={isPending}
+                >
+                    Upload photo
+                </button>
             </div>
             <ModalSuccessUpload
                 isOpen={isShowAnimation}

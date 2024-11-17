@@ -15,7 +15,7 @@ export default function UploadHistory() {
     return (
         <div>
             {images?.data.map((image, i) => (
-                <div key={i} className="flex flex-col md:flex-row items-start gap-2 md:gap-5 pt-2 pb-3 border-b border-gray-200">
+                <div key={i} className="flex flex-col md:flex-row items-start gap-2 md:gap-5 py-3 border-b border-gray-200">
                     <img src={STATIC + "/" + image.title} alt="tumbnail" className="size-10 md:size-12 rounded-xl object-cover border border-gray-300" crossOrigin="anonymous"/>
                     <div className="w-full flex-center items-start md:items-center gap-5">
                         <div className="w-full space-y-2">

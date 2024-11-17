@@ -52,3 +52,21 @@ export function useCredential() {
         throwOnError: true
     })
 }
+
+export function useCheckIsSuspend() {
+    const axiosInstance = useAxios()
+    const instance = axiosInstance()
+
+    const GET = async ({ signal }: { signal: AbortSignal }) => {
+        const req = await instance.get(`/auth/check/is-suspend`, { signal, withCredentials: true })
+        return req.data
+    }
+
+    return useQuery<Success<User>, AxiosError<Error>>({
+        queryKey: ["CHECK/IS-SUSPEND"],
+        queryFn: ({ signal }) => GET({ signal }),
+        enabled: false,
+        retry: 0
+    })
+
+}
