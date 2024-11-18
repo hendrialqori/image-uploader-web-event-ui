@@ -5,6 +5,7 @@ export const STATIC = SERVER + "/uploads"
 
 export const TOKEN = "token"
 export const LEADERBOARD = "leaderboard"
+export const CONNECT_ERROR = "connect_error"
 
 // error type response
 export const VALIDATION_ERROR = "VALIDATION_ERROR"

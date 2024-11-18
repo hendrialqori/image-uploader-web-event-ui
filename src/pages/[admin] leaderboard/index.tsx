@@ -7,7 +7,7 @@ export default function AdminLeaderboardPage() {
             style={{ backgroundImage: "url('/pertamina-5.webp')", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed" }}
         >
             <div className="fixed inset-0 bg-black/50" aria-label="overlay" />
-            <div className="relative bg-white/90 w-full max-w-[642px] mx-auto rounded-[0.65rem]" aria-label="form">
+            <div className="relative bg-white w-full max-w-[642px] mx-auto rounded-[0.65rem]" aria-label="form">
                 <header className="border-b-2 border-[#D9D9D9] h-[130px] md:h-[150px]">
                     <Logo />
                 </header>
