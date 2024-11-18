@@ -11,6 +11,7 @@ import { useUploadImage } from "#/services/upload-service";
 import ModalSuccessUpload from "./modal-success-upload";
 import { useCheckIsSuspend } from "#/services/auth-service";
 import { CgSpinner } from "react-icons/cg";
+import AudioSuccessUpload from "./audio-success-upload";
 
 const IMAGE_OPTIONS = [
     CONST.REUSABLE_UTENSILS, CONST.NON_REUSABLE_UTENSILS, CONST.WATER_CONTAINER_TUMBLER,
@@ -21,6 +22,8 @@ const IMAGE_OPTIONS = [
 
 export default function UploadArea() {
     const queryClient = useQueryClient()
+
+    const audioRef = React.useRef<HTMLAudioElement | null>(null)
 
     const [file, setFile] = React.useState<File | null>(null)
     const [preview, setPreview] = React.useState<string | ArrayBuffer | null>()
@@ -35,7 +38,7 @@ export default function UploadArea() {
         const { loaded, total } = event
         const percentage = (loaded / Number(total)) * 100
         const progress = Number(percentage.toFixed(0))
-        setProgressUpload(progress)
+        setProgressUpload(Math.min(99.9, progress))
     })
 
     const checkIsSuspend = useCheckIsSuspend()
@@ -48,6 +51,12 @@ export default function UploadArea() {
         })
 
         reader.readAsDataURL(image)
+    }
+
+    function playAudio() {
+        if (audioRef.current) {
+            audioRef.current.play()
+        }
     }
 
     function handleChangeImageOption(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -209,6 +218,9 @@ export default function UploadArea() {
         upload.mutate({ formData, signal }, {
             onSuccess: (res) => {
 
+                // play success audio
+                playAudio()
+
                 // reset state
                 setFile(null)
                 setOption("")
@@ -229,7 +241,7 @@ export default function UploadArea() {
                 const errorType = mockErrorResponse[error.response?.data.type as keyof typeof mockErrorResponse]
                 const errorMessage = error.response?.data.message ?? "Upload image failed"
 
-                setTimeout(() => setProgressUpload(0), 1500)
+                setProgressUpload(0)
 
                 toast.error(errorType, {
                     description: errorMessage
@@ -294,8 +306,8 @@ export default function UploadArea() {
                         <div className="w-full flex-center gap-5">
                             <div className="w-full space-y-2">
                                 <p className="text-xs text-pertamina-navy">{file?.name}</p>
-                                <Progress value={progressUpload} />
-                                <p className="text-xs text-pertamina-blue">{(file?.size! / 1000_000).toFixed(2)} MB ({progressUpload}%)</p>
+                                {isPending && <Progress value={progressUpload} />}
+                                <p className="text-xs text-pertamina-blue">{(file?.size! / 1000_000).toFixed(2)} MB {isPending && `(${progressUpload})%`}</p>
                             </div>
                         </div>
                     </div>
@@ -308,6 +320,7 @@ export default function UploadArea() {
                     Upload photo
                 </button>
             </div>
+            <AudioSuccessUpload ref={audioRef} />
             <ModalSuccessUpload
                 isOpen={isShowAnimation}
                 onClose={() => setShowAnimation(false)}

@@ -9,13 +9,6 @@ type Props = {
 }
 
 export default function ModalSuccessUpload({ isOpen, onClose }: Props) {
-    const audioRef = React.useRef<HTMLAudioElement | null>(null)
-
-    function play() {
-        if (audioRef.current) {
-            audioRef.current.play()
-        }
-    }
 
     function showConfetti(delay: number = 0) {
         setTimeout(async () => {
@@ -31,7 +24,6 @@ export default function ModalSuccessUpload({ isOpen, onClose }: Props) {
         if (isOpen) {
             showConfetti()
             showConfetti(1000)
-            play()
         }
     }, [isOpen])
 
@@ -46,7 +38,6 @@ export default function ModalSuccessUpload({ isOpen, onClose }: Props) {
                     <p className="text-lg text-pertamina-blue">You got your point increased!</p>
                     <button onClick={onClose} className="w-full py-3 text-2xl rounded-xl bg-gradient-to-r from-forest-green to-pertamina-blue text-white">OK</button>
                 </div>
-                <audio ref={audioRef} src="/trumpet.mp3" className="hidden" />
             </div>
         </Portal>
     )
