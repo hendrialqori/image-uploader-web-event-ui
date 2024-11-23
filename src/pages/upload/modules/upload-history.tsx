@@ -16,7 +16,7 @@ export default function UploadHistory() {
         <div>
             {images?.data.map((image, i) => (
                 <div key={i} className="flex flex-col md:flex-row items-start gap-2 md:gap-5 py-3 border-b border-gray-200">
-                    <img src={STATIC + "/" + image.title} alt="tumbnail" className="size-10 md:size-12 rounded-xl object-cover border border-gray-300" crossOrigin="anonymous"/>
+                    <img src={STATIC + "/" + image.title} alt="tumbnail" className="size-10 md:size-12 rounded-xl object-cover border border-gray-300" loading="lazy" crossOrigin="anonymous"/>
                     <div className="w-full flex-center items-start md:items-center gap-5">
                         <div className="w-full space-y-2">
                             <p className="text-center text-[0.6rem] tracking-wider bg-gray-200 rounded-full px-2 py-[0.05rem] w-max" aria-label="badge">{image.category}</p>

@@ -29,7 +29,7 @@ export default function ImageCard({ image }: Props) {
     return (
         <React.Fragment>
             <div className="grid grid-cols-5 md:grid-cols-7 border-b border-gray-200 py-4 w-full gap-5 md:gap-0">
-                <img src={STATIC + "/" + image.title} alt="image" className="size-8 md:size-14 rounded-xl object-cover border border-gray-300" crossOrigin="anonymous" />
+                <img src={STATIC + "/" + image.title} alt="image" className="size-8 md:size-14 rounded-xl object-cover border border-gray-300" loading="lazy" crossOrigin="anonymous" />
                 <div className="col-span-2 md:col-span-4">
                     <p className="text-[0.65rem] md:text-xs font-medium text-gray-500">Category image</p>
                     <h3 className="text-[0.65rem] md:text-sm font-medium">{image.category}</h3>
