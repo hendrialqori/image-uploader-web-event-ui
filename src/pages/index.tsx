@@ -7,6 +7,7 @@ const AdminLeaderboardPage = lazy(() => import("./[admin] leaderboard"))
 const ImageUploadPage = lazy(() => import("./upload"))
 const LoginPage = lazy(() => import("./login"))
 const RegisterPage = lazy(() => import("./register"))
+const EventOffPage = lazy(() => import("./upload/modules/event-off"))
 
 
-export { AdminDashboardPage, AdminLoginPage, AdminLeaderboardPage, ImageUploadPage, LoginPage, RegisterPage }
+export { AdminDashboardPage, AdminLoginPage, AdminLeaderboardPage, ImageUploadPage, LoginPage, RegisterPage, EventOffPage }

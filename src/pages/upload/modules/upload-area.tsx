@@ -12,6 +12,7 @@ import ModalSuccessUpload from "./modal-success-upload";
 import { useCheckIsSuspend } from "#/services/auth-service";
 import { CgSpinner } from "react-icons/cg";
 import AudioSuccessUpload from "./audio-success-upload";
+import { useNavigate } from "react-router-dom";
 
 const IMAGE_OPTIONS = [
     CONST.REUSABLE_UTENSILS, CONST.NON_REUSABLE_UTENSILS, CONST.WATER_CONTAINER_TUMBLER,
@@ -22,6 +23,7 @@ const IMAGE_OPTIONS = [
 
 export default function UploadArea() {
     const queryClient = useQueryClient()
+    const navigate = useNavigate()
 
     const audioRef = React.useRef<HTMLAudioElement | null>(null)
 
@@ -238,8 +240,16 @@ export default function UploadArea() {
                 setShowAnimation(true)
             },
             onError: (error) => {
+                const FORBIDDEN = 403
+
+                const errorStatus = error.response?.status
                 const errorType = mockErrorResponse[error.response?.data.type as keyof typeof mockErrorResponse]
                 const errorMessage = error.response?.data.message ?? "Upload image failed"
+
+                if (errorStatus == FORBIDDEN) {
+                    navigate("/event-off")
+                    return
+                }
 
                 setProgressUpload(0)
 

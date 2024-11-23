@@ -18,7 +18,9 @@ export default function useAxios() {
         })
 
         instance.interceptors.response.use(
-            (response) => response,
+            (response) => {
+                return response
+            },
             async (error) => {
                 const unauthorize = error.response.status === 401
                 if (unauthorize) {

@@ -14,6 +14,7 @@ function appRoutes() {
         createRoutesFromElements(
             <React.Fragment>
                 <Route path="/" errorElement={<Boundary.RouterError />}>
+
                     <Route index element={<Navigate to="/upload" />} />
 
                     <Route path="auth">
@@ -36,6 +37,7 @@ function appRoutes() {
                         </Route>
                     </Route>
 
+                    <Route path="event-off" element={<Page.EventOffPage />} />
                 </Route>
             </React.Fragment>
         )
